@@ -113,6 +113,43 @@ ApplicationWindow {
                         }
                     }
                 }
+
+                Column {
+                    spacing: 10
+                    width: parent.width - 20
+
+                    Text {
+                        text: "💬 Commentaires"
+                        font.pixelSize: 14
+                        font.bold: true
+                    }
+
+                    Repeater {
+                        model: commentModel.filterByProduct(selectedProduct ? selectedProduct.data._id : null)
+                        delegate: Text {
+                            text: "- " + modelData.author + ": " + modelData.text
+                            font.pixelSize: 12
+                            wrapMode: Text.Wrap
+                        }
+                    }
+
+                    TextArea {
+                        id: newCommentText
+                        placeholderText: "Ajouter un commentaire..."
+                        width: parent.width
+                        height: 60
+                    }
+
+                    Button {
+                        text: "💬 Publier"
+                        onClicked: {
+                            if (selectedProduct)
+                                commentModel.add(selectedProduct.data._id, newCommentText.text)
+                            newCommentText.text = ""
+                        }
+                    }
+                }
+
             }
         }
 
@@ -150,11 +187,36 @@ ApplicationWindow {
                         property var product: productModel.get(productModel.indexOf(item.data.product))
                         color: index % 2 === 0 ? "#fafafa" : "#ffffff"
 
-                        Text {
-                            anchors.centerIn: parent
-                            text: client.data.name + " ➔ " + product.data.name + " ($" + product.data.price + ")"
-                            font.pixelSize: 13
+                        Column {
+                            anchors.fill: parent
+                            anchors.margins: 5
+                            spacing: 4
+
+                            Text {
+                                text: client.data.name + " ➔ " + product.data.name + " ($" + product.data.price + ")"
+                                font.pixelSize: 13
+                            }
+
+                            Row {
+                                spacing: 10
+                                Text {
+                                    text: item.data.isPaid ? "✅ Payé" : "❗Impaye"
+                                    color: item.data.isPaid ? "green" : "red"
+                                    font.pixelSize: 12
+                                }
+
+                                Button {
+                                    text: "💰 Payer"
+                                    onClicked: {
+                                        paymentPage.command = item.data
+                                        paymentPage.client = clientModel.get(clientModel.indexOf(item.data.client)).data
+                                        paymentPage.product = productModel.get(productModel.indexOf(item.data.product)).data
+                                        paymentPage.visible = true
+                                    }
+                                }
+                            }
                         }
+
                     }
                 }
 
@@ -177,5 +239,10 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+    Payment {
+        id: paymentPage
+        visible: false
     }
 }

@@ -22,6 +22,7 @@ qt_add_qml_module(appTestMingw
         SOURCES models.h models.cpp
         SOURCES clientgenerator.h clientgenerator.cpp
         SOURCES viewmodels.hpp
+        QML_FILES Payment.qml
 )
 
 message(STATUS "Qt6 Core Version: ${Qt6Core_VERSION}")
