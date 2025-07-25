@@ -34,14 +34,14 @@ class Command : public TModel<Command> {
 };
 
 class Payment : public TModel<Payment> {
-    TM_SCHEMA(Payment, "models.shops", TF(phone), TF(name), TF(mode), TF(amount), TF(code), TF(ref))
+    TM_SCHEMA(Payment, "models.shops", TF(phone), TF(name), TF(mode), TF(amount), TF(code), TF(ref), TF(command))
 
     TextField phone;
     TextField name;
-    TextField mode = TextField().defaults("Mobile_Money");
+    TextField mode = TextField().defaults("Mobile Money");
     FloatField amount;
-    FloatField code;
-    TextField ref = TextField().defaults("Payment d'une commande");
+    TextField code;
+    TextField ref = TextField().defaults("Payment d une commande");
     ModelField<Command> command;
 };
 

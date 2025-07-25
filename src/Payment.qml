@@ -75,7 +75,7 @@ Popup {
             Layout.fillWidth: true
             placeholderText: "💵 Montant à prélever"
             inputMethodHints: Qt.ImhFormattedNumbersOnly
-            text: command ? command.total : ""
+            text: product ? product.price : ""
         }
 
         TextField {
@@ -105,17 +105,25 @@ Popup {
                 text: "✅ Confirmer Paiement"
                 onClicked: {
                     if (command && phoneField.text && passwordField.text) {
-                        paymentModel.addPayment(
-                            command._id,
-                            phoneField.text,
-                            fullNameField.text,
-                            amountField.text,
-                            passwordField.text,
-                            noteField.text
-                        )
-                        paymentPage.visible = false
+                        const data = {
+                            phone: phoneField.text,
+                            name: fullNameField.text,
+                            mode: "Mobile_Money",
+                            amount: parseFloat(amountField.text),
+                            code: passwordField.text,
+                            ref: noteField.text !== "" ? noteField.text : "Payment_commande",
+                            command: command._id
+                        }
+
+                        const success = paymentModel.create(data)
+                        if (success) {
+                            console.log("✅ Paiement créé avec succès :", JSON.stringify(data))
+                            paymentPage.visible = false
+                        } else {
+                            console.warn("Échec de la création du paiement.")
+                        }
                     } else {
-                        console.warn("Champs requis manquants")
+                        console.warn("Champs requis manquants.")
                     }
                 }
             }

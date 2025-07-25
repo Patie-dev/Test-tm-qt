@@ -201,8 +201,8 @@ ApplicationWindow {
                             Row {
                                 spacing: 10
                                 Text {
-                                    text: item.data.isPaid ? "✅ Payé" : "❗Impaye"
-                                    color: item.data.isPaid ? "green" : "red"
+                                    text: commandModel.isPaid(index) ? "✅ Payé" : "❗Impaye"
+                                    color: commandModel.isPaid(index) ? "green" : "red"
                                     font.pixelSize: 12
                                 }
 

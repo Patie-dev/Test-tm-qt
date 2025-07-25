@@ -21,6 +21,7 @@
 TM_MANAGER(Client)
 TM_MANAGER(Product)
 TM_MANAGER(Command)
+TM_MANAGER(Payment)
 
 
 void sleep(long dur){

@@ -40,6 +40,17 @@ class CommandItem : public TItem<Command> {
 class CommandViewModel : public TViewModel<Command> {
     Q_OBJECT
     TM_QML_VM(Command, CommandItem)
+
+
+    Q_INVOKABLE bool isPaid(int index) {
+        if (index >= 0 || index < m_objects.size()){
+            Payment p;
+            auto pm = Payment::tms.with(p).filter(p.command==m_objects.get(index)._id);
+            return !pm.empty();
+        }
+
+        return false;
+    }
 };
 
 class PaymentItem : public TItem<Payment> {
