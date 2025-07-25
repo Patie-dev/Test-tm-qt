@@ -148,30 +148,54 @@ void testTm() {
     Product::tms.clear();
     Command::tms.clear();
 
+    Client c1;
+    c1.name = "Patricia";
+    c1.email = "patitambo006@gmail.com";
+    c1.dob = "2004-10-16";
+    c1.save();
+
+    Client c2;
+    c2.name = "Ide";
+    c2.email = "simoide@gmail.com";
+    c2.dob = "2006-04-12";
+    c2.save();
+
+    Product p1;
+    p1.name = "arachides";
+    p1.price = 150;
+    p1.save();
+
+    Product p2;
+    p2.name = "haricot";
+    p2.price = 800;
+    p2.save();
+
+    Command cd1;
+    cd1.client = c1;
+    cd1.product = p2;
+    cd1.save();
+
+
     // Step 2: Clients
-    if (Client::tms.all().empty()) {
-        for (int i = 1; i <= 10; ++i) {
-            Client client;
-            std::string m = (i < 10 ? "0" : "");
-            client.name = "User " + std::to_string(i);
-            client.email = "user" + std::to_string(i) + "@example.com";
-            client.dob = "1990-" + m + std::to_string(i) + "-15";
-            client.save();
-        }
+    for (int i = 1; i <= 10; ++i) {
+        Client client;
+        std::string m = (i < 10 ? "0" : "");
+        client.name = "User " + std::to_string(i);
+        client.email = "user" + std::to_string(i) + "@example.com";
+        client.dob = "1990-" + m + std::to_string(i) + "-15";
+        client.save();
     }
 
     // Step 3: Products
-    if (Product::tms.all().empty()) {
-        for (int i = 1; i <= 20; ++i) {
-            Product product;
-            product.name = "Product " + std::to_string(i);
-            product.price = i * 3.5 + 1.99;
-            product.save();
-        }
+    for (int i = 1; i <= 20; ++i) {
+        Product product;
+        product.name = "Product " + std::to_string(i);
+        product.price = i * 3.5 + 1.99;
+        product.save();
     }
 
     // Step 4: Commands
-    if (Command::tms.all().empty()) {
+    if (true || Command::tms.all().empty()) {
         const auto& clients = Client::tms.all();
         const auto& products = Product::tms.all();
 
@@ -202,6 +226,14 @@ void testTm() {
             cmd.save();
         }
     }
+
+    auto c = Client::tms.all().first();
+    c.email = "ball@gmail.com";
+    c.save();
+
+    Client p;
+    auto i = Client::tms.with(p).filter(p.name == "Ide");
+
 }
 
 

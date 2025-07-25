@@ -42,6 +42,15 @@ class CommandViewModel : public TViewModel<Command> {
     TM_QML_VM(Command, CommandItem)
 };
 
+class PaymentItem : public TItem<Payment> {
+    Q_OBJECT
+    TM_QML_ITEM
+};
+
+class PaymentViewModel : public TViewModel<Payment> {
+    Q_OBJECT
+    TM_QML_VM(Payment, PaymentItem)
+};
 
 
 

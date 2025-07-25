@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ClientViewModel>("models", 1, 0, "ClientViewModel");
     qmlRegisterType<ProductViewModel>("models", 1, 0, "ProductViewModel");
     qmlRegisterType<CommandViewModel>("models", 1, 0, "CommandViewModel");
+    qmlRegisterType<PaymentViewModel>("models", 1, 0, "PaymentViewModel");
 
     QQmlApplicationEngine engine;
     QObject::connect(
