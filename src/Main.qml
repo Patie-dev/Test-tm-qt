@@ -13,6 +13,7 @@ ApplicationWindow {
     ClientViewModel { id: clientModel }
     ProductViewModel { id: productModel }
     CommandViewModel { id: commandModel }
+    PaymentViewModel { id: paymentModel }
 
     property var selectedClient: null
     property var selectedProduct: null
